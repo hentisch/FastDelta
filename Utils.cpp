@@ -8,7 +8,13 @@
 
 using namespace std;
 
-vector<string> split(string text){    
+vector<string> split(string text){  
+    /*This function will return a vector of words, 
+    based on the words used in the passed text. Each
+    word featured in the list corresponds to one use of the 
+    word in the source text*/  
+
+    text = removePunctuation(text);
     vector<string> words;    
 
     int lastIndex = -1;
@@ -24,6 +30,9 @@ vector<string> split(string text){
 }
 
 string stringFromFile(string filePath){
+    /*This function will return a string
+    representing all text found at the file
+    filePath points towards*/
     ifstream t(filePath);
     stringstream buffer;
     buffer << t.rdbuf();
@@ -31,6 +40,8 @@ string stringFromFile(string filePath){
 }
 
 string removePunctuation(string text){
+    /*This function will return a version of 
+    text will all punctuation removed*/
     string noPunc = "";
     for(int i = 0; i < text.size(); i++){
         if(!ispunct(text[i]))
