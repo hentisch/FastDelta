@@ -1,5 +1,7 @@
 #include "Text.h"
 
+Text::Text(){}
+
 Text::Text(string name, string text){
     /*Constructs a text object, with the 
     word frequencies attribute storing the 

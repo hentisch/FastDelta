@@ -13,5 +13,6 @@ class Text{
         string authorName;
         unordered_map <string, double> wordFrequencies;
         Text(string name, string text);
+        Text();
         void printFrequencies();
 };

@@ -1,3 +1,4 @@
+#include "Utils.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -48,4 +49,21 @@ string removePunctuation(string text){
             noPunc.push_back(text[i]);
     }
     return noPunc;
+}
+
+unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps){
+    /*This will return the "sum" of all maps in the maps vector.
+    Every key in each individual map will be represented, and if multiple
+    maps have the same key, the sum of both of the maps values for those keys 
+    will be represnted in the returned map.*/
+    unordered_map<string, double> sumMap;
+    for(unordered_map<string, double> map: maps){
+        for(auto feature: map){
+            if(map.find(feature.first) == map.end()) //Checks if the feature already is in the sumMap
+                sumMap[feature.first] = map[feature.first];
+            else
+                sumMap[feature.first] += map[feature.first];
+        }
+    }
+    return sumMap;
 }
