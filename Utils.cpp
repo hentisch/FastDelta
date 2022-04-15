@@ -93,7 +93,7 @@ unordered_map<string, double> tokenize(string content, int& numWords){
     
     int lastIndex = -1;
     for(int i = 0; i < content.length(); i++){
-        if(content[i] == ' '){ 
+        if(content[i] == ' ' || content[i] == '\n' || content[i] == '-'){ 
             numWords++;
             string currentWord = getCleanedWord(content.substr(lastIndex+1, i - lastIndex));
             cleanWord(currentWord);   
