@@ -9,20 +9,24 @@
 
 using namespace std;
 
+/*NOTE: THE SPLIT FUNCTION IS FAIRLY INNEFICENT FOR TOKENIZATION,
+AND IS NOT, AND SHOULD NOT BE USED FOR THAT TASK. INSTEAD,
+THE tokenize() FUNCTION SHOULD BE USED TO PRODUCE A DIRECT
+HASHMAP*/
+
 vector<string> split(string text){  
     /*This function will return a vector of words, 
     based on the words used in the passed text. Each
     word featured in the list corresponds to one use of the 
     word in the source text*/  
 
-    text = removePunctuation(text);
     vector<string> words;    
 
     int lastIndex = -1;
     for(int i = 0; i < text.length(); i++){
         if(text[i] == ' ')
         {
-            words.push_back(text.substr(lastIndex+1, i - lastIndex));
+            words.push_back(getCleanedWord(text.substr(lastIndex+1, i - lastIndex)));
             lastIndex = i;
         }
     }
@@ -30,7 +34,7 @@ vector<string> split(string text){
     return words;
 }
 
-string stringFromFile(string filePath){
+string readFile(string filePath){
     /*This function will return a string
     representing all text found at the file
     filePath points towards*/
@@ -40,15 +44,21 @@ string stringFromFile(string filePath){
     return buffer.str();
 }
 
-string removePunctuation(string text){
+string getCleanedWord(string text){
     /*This function will return a version of 
-    text will all punctuation removed*/
+    text will all non alphabetic characters removed*/
     string noPunc = "";
     for(int i = 0; i < text.size(); i++){
-        if(!ispunct(text[i]))
-            noPunc.push_back(text[i]);
+        if(isalpha(text[i]))
+            noPunc.push_back(tolower(text[i]));
     }
     return noPunc;
+}
+
+void cleanWord(string& text){
+    /*This function will remove all non-alphabetic characters from 
+    a string, in-place*/
+    text = getCleanedWord(text);
 }
 
 unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps){
@@ -66,4 +76,48 @@ unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps
         }
     }
     return sumMap;
+}
+
+unordered_map<string, double> tokenize(string content, int& numWords){
+    /*This funciton returns a hash map, with the keys
+    representing each word in the passed string, and the
+    value representing the number of occurances of the 
+    word in the passed content. Additionally, the passed numWords
+    refrence will contain the total number of words in the passed
+    string*/
+
+    numWords = 0;
+
+    unordered_map<string, double> wordFreqs;
+    cout << "map created" << endl;
+    
+    int lastIndex = -1;
+    for(int i = 0; i < content.length(); i++){
+        if(content[i] == ' '){ 
+            numWords++;
+            string currentWord = getCleanedWord(content.substr(lastIndex+1, i - lastIndex));
+            cleanWord(currentWord);   
+            wordFreqs[currentWord]++;
+            lastIndex = i;
+        }
+    }
+
+    /*In situtations where an author has a sequence of characters that are all non-alphabetic,
+    the cleanWord() method will return an empty sting. As this does not represent any unique
+    feature, we should remove this potential feature*/
+    if(wordFreqs.find("") == wordFreqs.end()){
+        wordFreqs.erase("");
+    }
+
+    return wordFreqs;
+}
+
+void relativize(unordered_map<string, double>& map, double dividend){
+    /* This function will divide every value in the passed map by the specified
+    dividend.*/
+
+    for(pair feature: map)
+    {
+        map[feature.first] /= dividend;
+    }
 }

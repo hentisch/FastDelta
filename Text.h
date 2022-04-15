@@ -15,4 +15,6 @@ class Text{
         Text(string name, string text);
         Text();
         void printFrequencies();
+    private:
+        int wordsWritten;
 };

@@ -12,7 +12,7 @@ Corpus::Corpus(string folderPath){
         
         string splitName = path.substr(path.find_last_of("/")+1, (path.find(".") - path.find_last_of("/")) - 1);
         string authorName = splitName.substr(splitName.find("_")+1);
-        string content = stringFromFile(file.path());
+        string content = readFile(file.path());
 
         if(authorContent.find(authorName) == authorContent.end())
             authorContent[authorName] = content;
@@ -51,5 +51,18 @@ void Corpus::appendTexts(vector<Text> texts){
     for(Text t: texts){
         writings[t.authorName] = t;
     } 
-    overall_frequencies = sumMaps(this->getFrequenciesVec());
+    overallFrequencies = sumMaps(this->getFrequenciesVec());
 }
+
+double Corpus::getFeatureMean(string feature){
+    if(overallFrequencies.find(feature) == overallFrequencies.end())
+       throw std::invalid_argument("\"" +  feature + "\"" + " could not be found in the overall set of frequencies");
+    return this->overallFrequencies[feature] / this->writings.size();
+}
+
+void Corpus::printOverallFeatures(){
+    for(pair i: overallFrequencies){
+        cout << i.first << " " << i.second << "\n";
+    }
+}
+

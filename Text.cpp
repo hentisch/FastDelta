@@ -7,15 +7,14 @@ Text::Text(string name, string text){
     word frequencies attribute storing the 
     relitive word frequiences for the text 
     given as a paramater*/
-    vector<string> words = split(text);
-    for(int i = 0; i < words.size(); i++){
-        if(wordFrequencies.find(words[i]) == wordFrequencies.end()){
-            wordFrequencies[words[i]] = 1.0 / words.size();
-        }
-        else{
-            wordFrequencies[words[i]] += 1.0 / words.size();
-        }
-    }
+    this->authorName = name;
+
+    int totalWords;
+    unordered_map<string, double> features = tokenize(text, totalWords);
+
+    this->wordsWritten = totalWords;
+    relativize(features, totalWords);
+    this->wordFrequencies = features;
 }
 
 void Text::printFrequencies(){
