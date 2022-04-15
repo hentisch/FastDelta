@@ -69,9 +69,6 @@ unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps
     unordered_map<string, double> sumMap;
     for(unordered_map<string, double> map: maps){
         for(auto feature: map){
-            if(map.find(feature.first) == map.end()) //Checks if the feature already is in the sumMap
-                sumMap[feature.first] = map[feature.first];
-            else
                 sumMap[feature.first] += map[feature.first];
         }
     }
@@ -89,7 +86,6 @@ unordered_map<string, double> tokenize(string content, int& numWords){
     numWords = 0;
 
     unordered_map<string, double> wordFreqs;
-    cout << "map created" << endl;
     
     int lastIndex = -1;
     for(int i = 0; i < content.length(); i++){
