@@ -3,10 +3,9 @@
 Text::Text(){}
 
 Text::Text(string name, string text){
-    /*Constructs a text object, with the 
-    word frequencies attribute storing the 
-    relitive word frequiences for the text 
-    given as a paramater*/
+    /*Constructs a text object, immediately
+    tokenizing the text string and storing
+    the result in the wordFrequenceis map.*/
     this->authorName = name;
 
     int totalWords;
@@ -18,6 +17,8 @@ Text::Text(string name, string text){
 }
 
 void Text::trimFeatures(unordered_set<string> topFeatures){
+    /* This function will remove every feature from the text object's wordFrequencies
+    map unless it is part of the passed topFeatures vector*/
 
     auto isInfrequentFeature = [&](pair<string, double> feature){
         return topFeatures.find(feature.first) == topFeatures.end(); 

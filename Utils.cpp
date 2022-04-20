@@ -150,6 +150,8 @@ void autoInsertFeature(vector<pair<string, double>>& features, pair<string, doub
 }
 
 vector<pair<string, double>> getEmptyFeatureVector(int length){
+    /*This function returns a vector of the passed length, which
+    will be filled with pairs of empty strings and vectors*/
     vector<pair<string, double>> emptyVec;
     pair<string, double> emptyFeature("", 0.0);
     for(int i = 0; i < length; i++){
