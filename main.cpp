@@ -8,10 +8,9 @@
 using namespace std;
 
 int main(){
-    cout << "Reading string" << endl;
-    string content = readFile("/home/henry/Documents/Code/Open_Source/CStylo/Dataset/Dope_SathRohmer.txt");
-    cout << "String read" << endl;
-    Text writing("SathRohmer", content);
-    writing.printFrequencies();
+    Corpus dataset("/home/henry/Desktop/GitRepos/CStylo/Dataset", 50);
+
+    dataset.writings["Unknown"].printFrequencies();
+
     return 0;
 }

@@ -17,3 +17,9 @@ unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps
 unordered_map<string, double> tokenize(string content, int& numWords);
 
 void relativize(unordered_map<string, double>& map, double dividend);
+
+void insertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature, int targetIndex);
+
+void autoInsertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature);
+
+vector<pair<string, double>> getEmptyFeatureVector(int length);

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <iostream>
 
 #include "Utils.h"
@@ -14,6 +15,7 @@ class Text{
         unordered_map <string, double> wordFrequencies;
         Text(string name, string text);
         Text();
+        void trimFeatures(unordered_set<string> topFeatures);
         void printFrequencies();
     private:
         int wordsWritten;

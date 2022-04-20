@@ -101,7 +101,7 @@ unordered_map<string, double> tokenize(string content, int& numWords){
     /*In situtations where an author has a sequence of characters that are all non-alphabetic,
     the cleanWord() method will return an empty sting. As this does not represent any unique
     feature, we should remove this potential feature*/
-    if(wordFreqs.find("") == wordFreqs.end()){
+    if(wordFreqs.find("") != wordFreqs.end()){
         wordFreqs.erase("");
     }
 
@@ -116,4 +116,44 @@ void relativize(unordered_map<string, double>& map, double dividend){
     {
         map[feature.first] /= dividend;
     }
+}
+
+void insertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature, int targetIndex){
+    /* This function will insert targetFeature at targetIndex in the given array, removing the last element
+    of the array and then pushing all elements past targetIndex by one in order to make space to insert
+    targetFeature*/
+    for(int i = features.size(); i < targetIndex; i--){
+        features[i] = features[i-1];
+    }
+    features[targetIndex] = targetFeature;
+}
+
+void autoInsertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature){
+    /*this function will automatically insert a feature into an array of features, placing the
+    feature in its correct posistion to maintain an array sorted from most frequent to least
+    frequent feature*/
+
+    
+    if(features[features.size()-1].second > targetFeature.second)
+    /*this checks if the last feature of the vector is larger than our target feature, 
+    in which case our target feature is not in the top n elements, and we dont need to 
+    bother finding it's proper position*/
+        return;
+        
+
+    for(int i = 0; i < features.size(); i++){
+        if(targetFeature.second > features[i].second){
+            insertFeature(features, targetFeature, i);
+            return;
+        }
+    }
+}
+
+vector<pair<string, double>> getEmptyFeatureVector(int length){
+    vector<pair<string, double>> emptyVec;
+    pair<string, double> emptyFeature("", 0.0);
+    for(int i = 0; i < length; i++){
+        emptyVec.push_back(emptyFeature);
+    }
+    return emptyVec;
 }

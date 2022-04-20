@@ -17,6 +17,16 @@ Text::Text(string name, string text){
     this->wordFrequencies = features;
 }
 
+void Text::trimFeatures(unordered_set<string> topFeatures){
+
+    auto isInfrequentFeature = [&](pair<string, double> feature){
+        return topFeatures.find(feature.first) == topFeatures.end(); 
+        //return true;
+    };
+
+    erase_if(this->wordFrequencies, isInfrequentFeature);
+}
+
 void Text::printFrequencies(){
     /*Prints the tokenized word 
     frequencies of a text*/

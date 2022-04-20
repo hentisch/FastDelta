@@ -1,6 +1,6 @@
 #include "Corpus.h"
 
-Corpus::Corpus(string folderPath){
+Corpus::Corpus(string folderPath, int numFeatures){
     /*This function will construct a corpus from a set of text files in a certain folder. These should be in the format
     TextName_AuthorName.txt with both names in camel case. Note that if there are two texts with the same author, 
     they will be combined into one "text" */
@@ -27,11 +27,15 @@ Corpus::Corpus(string folderPath){
     }
 
     this->appendTexts(texts);
+
+    this -> features = this->trimFeatures(numFeatures);
 }
 
-Corpus::Corpus(vector<Text> texts){
+Corpus::Corpus(vector<Text> texts, int numFeatures){
     /*Constructs Corpus object*/
     this->appendTexts(texts);
+
+    this -> features = this->trimFeatures(numFeatures);
 }
 
 vector<unordered_map<string, double>> Corpus::getFrequenciesVec(){
@@ -54,7 +58,47 @@ void Corpus::appendTexts(vector<Text> texts){
     overallFrequencies = sumMaps(this->getFrequenciesVec());
 }
 
+vector<pair<string, double>> Corpus::getMostFrequentFeatures(int numFeatures){
+    vector<pair<string, double>> features = getEmptyFeatureVector(numFeatures);
+    for(pair feature: this->overallFrequencies){
+        autoInsertFeature(features, feature);
+    }
+    return features;
+}
+
+vector<string> Corpus::trimFeatures(int numFeatures){
+    /*this method should remove all features in the corpus, except for the
+    numFeatures most frequent features. A string vector will be returned,
+    reperesenting the strings still present in the Corpus maps.*/
+    vector<pair<string, double>> topFeaturesVec = this->getMostFrequentFeatures(numFeatures);
+
+    unordered_set<string> topFeaturesSet; /*As we are going to go through every feature in each of our
+    frequency maps, it is usefull to be able to check if a word is in this list in o(1) time*/
+
+    for(pair feature: topFeaturesVec){
+        topFeaturesSet.insert(feature.first);
+    }
+
+    auto isInfrequentFeature = [&](pair<string, double> feature){
+        return topFeaturesSet.find(feature.first) == topFeaturesSet.end(); 
+    };
+    
+    erase_if(this->overallFrequencies, isInfrequentFeature);
+
+    for(auto& text: this->writings){
+        text.second.trimFeatures(topFeaturesSet);
+    }
+
+    vector<string> topFeatures;
+    for(string feature: topFeaturesSet){
+        topFeatures.push_back(feature);
+    }
+
+    return topFeatures;
+}
+
 double Corpus::getFeatureMean(string feature){
+    /*This method should return the mean relitive frequency for a given feature across all texts in your corpus */
     if(overallFrequencies.find(feature) == overallFrequencies.end())
        throw std::invalid_argument("\"" +  feature + "\"" + " could not be found in the overall set of frequencies");
     return this->overallFrequencies[feature] / this->writings.size();

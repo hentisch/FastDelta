@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "Utils.h"
 #include "Text.h"
@@ -15,13 +16,18 @@ class Corpus{
         unordered_map <string, double> overallFrequencies; /*This should
         represent the sum of all frequences for every text in writing*/
 
-        Corpus(vector<Text> texts);
-        Corpus(string folderPath);
+        Corpus(string folderPath, int numFeatures);
+        Corpus(vector<Text> texts, int numFeatures);
 
         vector<unordered_map<string, double>> getFrequenciesVec();
         void appendTexts(vector<Text>);
+        vector<pair<string, double>> getMostFrequentFeatures(int numFeatures);
+        vector<string> trimFeatures(int numFeatures);
 
         double getFeatureMean(string feature);
 
         void printOverallFeatures();
+    
+    private:
+        vector<string> features;
 };
