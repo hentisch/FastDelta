@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cctype>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -151,11 +152,56 @@ void autoInsertFeature(vector<pair<string, double>>& features, pair<string, doub
 
 vector<pair<string, double>> getEmptyFeatureVector(int length){
     /*This function returns a vector of the passed length, which
-    will be filled with pairs of empty strings and vectors*/
+    will be filled with pairs of empty strings and vectoress*/
     vector<pair<string, double>> emptyVec;
     pair<string, double> emptyFeature("", 0.0);
     for(int i = 0; i < length; i++){
         emptyVec.push_back(emptyFeature);
     }
     return emptyVec;
+}
+
+/* The three following functions are adapted from
+https://gist.github.com/pdilyard/27808790295f31f7cf9d0ba104ffca9c */
+
+typedef vector<double> euc_vec;
+
+double magnitude(euc_vec vector_a) {
+  double total = 0.0;
+  euc_vec::const_iterator i;
+  for (i = vector_a.begin(); i != vector_a.end(); ++i) {
+    total += (*i * *i);
+  }
+  return sqrt(total);
+}
+
+double sum(euc_vec vector_a) {
+  double total = 0.0;
+  euc_vec::const_iterator i;
+  for (i = vector_a.begin(); i != vector_a.end(); ++i) {
+    total += *i;
+  }
+  return total;
+}
+
+double dot_product(euc_vec vector_a, euc_vec vector_b) {
+  euc_vec multiplied;
+  multiplied.reserve(300);
+  int size = min(vector_a.size(), vector_b.size());
+
+  for (int i = 0; i < size; ++i) {
+    multiplied.push_back(vector_a[i] * vector_b[i]);
+  }
+
+  return sum(multiplied);
+}
+
+double cosine_distance(euc_vec vector_a, euc_vec vector_b) {
+  double numer = dot_product(vector_a, vector_b);
+  double denom = magnitude(vector_a) * magnitude(vector_b);
+  if (denom > 0.0) {
+    return 1.0 - (numer / denom);
+  } else {
+    return 1.0;
+  }
 }
