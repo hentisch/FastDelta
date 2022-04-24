@@ -106,10 +106,45 @@ vector<string> Corpus::trimFeatures(int numFeatures){
 }
 
 double Corpus::getFeatureMean(string feature){
-    /*This method should return the mean frequency for a given feature across all texts in your corpus */
+    /*This returns the mean frequency for a given feature across all texts in your corpus */
     if(overallFrequencies.find(feature) == overallFrequencies.end())
        throw std::invalid_argument("\"" +  feature + "\"" + " could not be found in the overall set of frequencies");
     return this->overallFrequencies[feature] / this->writings.size();
+}
+
+double Corpus::getFeatureStdev(string feature){
+    /* This method returns the standard deviation of a feature amongst the corpus*/
+    if(overallFrequencies.find(feature) == overallFrequencies.end())
+        throw std::invalid_argument("\"" + feature + "\"" + " could not be found in the overall set of frequencies");
+    
+    double mean = this->getFeatureMean(feature);
+
+    double sum = 0;
+
+    for(pair text: writings){
+        sum += pow(text.second.wordFrequencies[feature] - mean, 2);
+    }
+
+    return sqrt(sum/writings.size());
+}
+
+vector<double> Corpus::getZScores(string authorName){
+    /* This method returns a vector of z-scores for the given text, with each score
+    in the z-score vector representeing the word represented at the same index in the
+    passed features array. */
+    vector<double> zScores;
+
+    for(string feature: this->features){
+        double textFrequency;
+        if(this->writings[authorName].wordFrequencies.find(feature) == this->writings[authorName].wordFrequencies.end())
+            double textFrequency = 0;
+        else
+            double textFrequency = this->writings[authorName].wordFrequencies[feature];
+        
+        zScores.push_back((textFrequency - this->getFeatureMean(feature)) / this->getFeatureStdev(feature));
+    }
+    
+    return zScores;
 }
 
 void Corpus::printOverallFeatures(){

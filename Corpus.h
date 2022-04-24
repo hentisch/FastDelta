@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <math.h>
 
 #include "Utils.h"
 #include "Text.h"
@@ -25,6 +26,9 @@ class Corpus{
         vector<string> trimFeatures(int numFeatures);
 
         double getFeatureMean(string feature);
+        double getFeatureStdev(string feature);
+        double getFeatureStdev(string feature, string authorName);
+        vector<double> getZScores(string authorName);
 
         void printOverallFeatures();
     
