@@ -9,7 +9,7 @@ Text::Text(string name, string text){
     this->authorName = name;
 
     int totalWords;
-    unordered_map<string, double> features = tokenize(text, totalWords);
+    feature_map features = tokenize(text, totalWords);
 
     this->wordsWritten = totalWords;
     relativize(features, totalWords);

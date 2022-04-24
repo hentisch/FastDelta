@@ -5,6 +5,10 @@
 
 using namespace std;
 
+typedef unordered_map<string, double> feature_map;
+typedef pair<string, double> feature;
+typedef vector<feature> feature_vec;
+
 vector<string> split(string text);
 
 string readFile(string filePath);
@@ -12,16 +16,16 @@ string readFile(string filePath);
 string getCleanedWord(string text);
 void cleanWord(string& text);
 
-unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps);
+feature_map sumMaps(vector<feature_map> maps);
 
-unordered_map<string, double> tokenize(string content, int& numWords);
+feature_map tokenize(string content, int& numWords);
 
-void relativize(unordered_map<string, double>& map, double dividend);
+void relativize(feature_map& map, double dividend);
 
-void insertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature, int targetIndex);
+void insertFeature(feature_vec& features, feature targetFeature, int targetIndex);
 
-void autoInsertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature);
+void autoInsertFeature(feature_vec& features, feature targetFeature);
 
-vector<pair<string, double>> getEmptyFeatureVector(int length);
+vector<feature> getEmptyFeatureVector(int length);
 
 double cosine_distance(vector<double> vector_a, vector<double> vector_b);

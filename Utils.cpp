@@ -62,7 +62,7 @@ void cleanWord(string& text){
     text = getCleanedWord(text);
 }
 
-unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps){
+feature_map sumMaps(vector<feature_map> maps){
     /*This will return the "sum" of all maps in the maps vector.
     Every key in each individual map will be represented, and if multiple
     maps have the same key, the sum of both of the maps values for those keys 
@@ -76,7 +76,7 @@ unordered_map<string, double> sumMaps(vector<unordered_map<string, double>> maps
     return sumMap;
 }
 
-unordered_map<string, double> tokenize(string content, int& numWords){
+feature_map tokenize(string content, int& numWords){
     /*This funciton returns a hash map, with the keys
     representing each word in the passed string, and the
     value representing the number of occurances of the 
@@ -109,7 +109,7 @@ unordered_map<string, double> tokenize(string content, int& numWords){
     return wordFreqs;
 }
 
-void relativize(unordered_map<string, double>& map, double dividend){
+void relativize(feature_map& map, double dividend){
     /* This function will divide every value in the passed map by the specified
     dividend.*/
 
@@ -119,7 +119,7 @@ void relativize(unordered_map<string, double>& map, double dividend){
     }
 }
 
-void insertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature, int targetIndex){
+void insertFeature(feature_vec& features, feature targetFeature, int targetIndex){
     /* This function will insert targetFeature at targetIndex in the given array, removing the last element
     of the array and then pushing all elements past targetIndex by one in order to make space to insert
     targetFeature*/
@@ -129,7 +129,7 @@ void insertFeature(vector<pair<string, double>>& features, pair<string, double> 
     features[targetIndex] = targetFeature;
 }
 
-void autoInsertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature){
+void autoInsertFeature(feature_vec& features, feature targetFeature){
     /*this function will automatically insert a feature into an array of features, placing the
     feature in its correct posistion to maintain an array sorted from most frequent to least
     frequent feature*/
@@ -150,7 +150,7 @@ void autoInsertFeature(vector<pair<string, double>>& features, pair<string, doub
     }
 }
 
-vector<pair<string, double>> getEmptyFeatureVector(int length){
+vector<feature> getEmptyFeatureVector(int length){
     /*This function returns a vector of the passed length, which
     will be filled with pairs of empty strings and vectoress*/
     vector<pair<string, double>> emptyVec;

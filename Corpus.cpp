@@ -41,7 +41,7 @@ Corpus::Corpus(vector<Text> texts, int numFeatures){
     this -> features = this->trimFeatures(numFeatures);
 }
 
-vector<unordered_map<string, double>> Corpus::getFrequenciesVec(){
+vector<feature_map> Corpus::getFrequenciesVec(){
     /*This method returns a vector of dictionaries, with each 
     dictonary representing the word frequencies for a text in the corpus */
     vector<unordered_map<string, double>> frequencies;
@@ -61,10 +61,10 @@ void Corpus::appendTexts(vector<Text> texts){
     overallFrequencies = sumMaps(this->getFrequenciesVec());
 }
 
-vector<pair<string, double>> Corpus::getMostFrequentFeatures(int numFeatures){
+feature_vec Corpus::getMostFrequentFeatures(int numFeatures){
     /* This method will return the numFeatures most frequent features amongst the 
     entire corpus */
-    vector<pair<string, double>> features = getEmptyFeatureVector(numFeatures);
+    feature_vec features = getEmptyFeatureVector(numFeatures);
     for(pair feature: this->overallFrequencies){
         autoInsertFeature(features, feature);
     }
@@ -78,7 +78,7 @@ vector<string> Corpus::trimFeatures(int numFeatures){
     this feature trimming also applies to the Corpus objects consituent
     text objects*/
 
-    vector<pair<string, double>> topFeaturesVec = this->getMostFrequentFeatures(numFeatures);
+    feature_vec topFeaturesVec = this->getMostFrequentFeatures(numFeatures);
 
     unordered_set<string> topFeaturesSet; /*As we are going to go through every feature in each of our
     frequency maps, it is usefull to be able to check if a word is in this list in o(1) time*/
