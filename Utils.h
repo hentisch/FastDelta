@@ -23,3 +23,5 @@ void insertFeature(vector<pair<string, double>>& features, pair<string, double> 
 void autoInsertFeature(vector<pair<string, double>>& features, pair<string, double> targetFeature);
 
 vector<pair<string, double>> getEmptyFeatureVector(int length);
+
+double cosine_distance(vector<double> vector_a, vector<double> vector_b);
