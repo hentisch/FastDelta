@@ -10,14 +10,9 @@ using namespace std;
 int main(){
     Corpus dataset("/home/henry/Desktop/GitRepos/CStylo/Dataset", 50);
 
-    vector<double> scores = dataset.getZScores("Unknown");
+    vector<pair<string, double>> rankings = dataset.rankBySimilarity("Unknown");
 
-    for(double feature: scores){
-        cout << feature << " ";
+    for(pair author: rankings){
+        cout << author.first << "\n";
     }
-    cout << "\n";
-
-    cout << scores.size() << "\n";
-
-    return 0;
 }

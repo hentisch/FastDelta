@@ -147,6 +147,30 @@ vector<double> Corpus::getZScores(string authorName){
     return zScores;
 }
 
+vector<pair<string, double>> Corpus::rankBySimilarity(string authorName){
+    vector<double> unknownZScores = this->getZScores(authorName);
+    vector<pair<string, double>> rankings;
+
+    for(pair text: writings){
+        if(text.first != authorName){
+            vector<double> zScores = this->getZScores(text.first);
+            double distance = findCosDist(unknownZScores, zScores);
+            if(rankings.size() <= 0)
+                rankings.push_back(pair<string, double>(text.first, distance));
+            else{
+                for(int i = 0; i < rankings.size(); i++){
+                    if(distance > rankings[i].second){
+                        rankings.insert(rankings.begin() + i, pair<string, double>(text.first, distance));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return rankings;
+}
+
 void Corpus::printOverallFeatures(){
     /* This method will print out the overallFrequencies 
     map, for the purpose of debugging*/
@@ -154,4 +178,3 @@ void Corpus::printOverallFeatures(){
         cout << i.first << " " << i.second << "\n";
     }
 }
-

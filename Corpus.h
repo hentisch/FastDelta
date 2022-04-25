@@ -27,11 +27,12 @@ class Corpus{
 
         double getFeatureMean(string feature);
         double getFeatureStdev(string feature);
-        double getFeatureStdev(string feature, string authorName);
         vector<double> getZScores(string authorName);
+        vector<pair<string, double>> rankBySimilarity(string authorName);
 
         void printOverallFeatures();
-    
+
+
     private:
         vector<string> features;
 };

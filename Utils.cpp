@@ -196,7 +196,7 @@ double dot_product(euc_vec vector_a, euc_vec vector_b) {
   return sum(multiplied);
 }
 
-double cosine_distance(euc_vec vector_a, euc_vec vector_b) {
+double findCosDist(euc_vec vector_a, euc_vec vector_b) {
   double numer = dot_product(vector_a, vector_b);
   double denom = magnitude(vector_a) * magnitude(vector_b);
   if (denom > 0.0) {

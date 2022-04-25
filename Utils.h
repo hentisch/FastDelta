@@ -28,4 +28,4 @@ void autoInsertFeature(feature_vec& features, feature targetFeature);
 
 vector<feature> getEmptyFeatureVector(int length);
 
-double cosine_distance(vector<double> vector_a, vector<double> vector_b);
+double findCosDist(vector<double> vector_a, vector<double> vector_b);
