@@ -135,12 +135,9 @@ vector<double> Corpus::getZScores(string authorName){
     vector<double> zScores;
 
     for(string feature: this->features){
-        double textFrequency;
-        if(this->writings[authorName].wordFrequencies.find(feature) == this->writings[authorName].wordFrequencies.end())
-            double textFrequency = 0;
-        else
-            double textFrequency = this->writings[authorName].wordFrequencies[feature];
-        
+
+        double textFrequency = this->writings[authorName].getFrequency(feature);
+
         zScores.push_back((textFrequency - this->getFeatureMean(feature)) / this->getFeatureStdev(feature));
     }
     
@@ -158,12 +155,16 @@ vector<pair<string, double>> Corpus::rankBySimilarity(string authorName){
             if(rankings.size() <= 0)
                 rankings.push_back(pair<string, double>(text.first, distance));
             else{
+                bool atEnd = true;
                 for(int i = 0; i < rankings.size(); i++){
-                    if(distance > rankings[i].second){
+                    if(distance < rankings[i].second){
                         rankings.insert(rankings.begin() + i, pair<string, double>(text.first, distance));
+                        atEnd = false;
                         break;
                     }
                 }
+                if(atEnd)
+                    rankings.push_back(pair<string, double>(text.first, distance));
             }
         }
     }

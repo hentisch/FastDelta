@@ -12,7 +12,12 @@ int main(){
 
     vector<pair<string, double>> rankings = dataset.rankBySimilarity("Unknown");
 
-    for(pair author: rankings){
-        cout << author.first << "\n";
+    for(pair author: dataset.writings){
+        cout << author.first << endl;
+    }
+    cout << endl;
+
+    for(pair rank: rankings){
+        cout << rank.first << endl;
     }
 }

@@ -17,6 +17,7 @@ class Text{
         Text();
         void trimFeatures(unordered_set<string> topFeatures);
         void printFrequencies();
+        double getFrequency(string token);
     private:
         int wordsWritten;
 };

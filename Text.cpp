@@ -28,6 +28,13 @@ void Text::trimFeatures(unordered_set<string> topFeatures){
     erase_if(this->wordFrequencies, isInfrequentFeature);
 }
 
+double Text::getFrequency(string feature){
+    if(wordFrequencies.find(feature) == wordFrequencies.end()){
+        return 0;
+    }
+    return wordFrequencies[feature];
+}
+
 void Text::printFrequencies(){
     /*Prints the tokenized word 
     frequencies of a text*/
