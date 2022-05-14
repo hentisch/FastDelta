@@ -1,5 +1,7 @@
 #include "Corpus.h"
 
+using namespace FastDelta;
+
 Corpus::Corpus(string folderPath, int numFeatures){
     /*This function will construct a corpus from a set of text files in a certain folder. These should be in the format
     TextName_AuthorName.txt with both names in camel case. Note that if there are two texts with the same author, 

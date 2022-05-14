@@ -1,5 +1,7 @@
 #include "Text.h"
 
+using namespace FastDelta;
+
 Text::Text(){}
 
 Text::Text(string name, string text){

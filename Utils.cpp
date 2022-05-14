@@ -10,6 +10,8 @@
 
 using namespace std;
 
+using namespace FastDelta;
+
 /*NOTE: THE SPLIT FUNCTION IS FAIRLY INNEFICENT FOR TOKENIZATION,
 AND IS NOT, AND SHOULD NOT BE USED FOR THAT TASK. INSTEAD,
 THE tokenize() FUNCTION SHOULD BE USED TO PRODUCE A DIRECT
@@ -27,7 +29,7 @@ vector<string> split(string text){
     for(int i = 0; i < text.length(); i++){
         if(text[i] == ' ')
         {
-            words.push_back(getCleanedWord(text.substr(lastIndex+1, i - lastIndex)));
+            words.push_back(FastDelta::getCleanedWord(text.substr(lastIndex+1, i - lastIndex)));
             lastIndex = i;
         }
     }
@@ -59,7 +61,7 @@ string getCleanedWord(string text){
 void cleanWord(string& text){
     /*This function will remove all non-alphabetic characters from 
     a string, in-place*/
-    text = getCleanedWord(text);
+    text = FastDelta::getCleanedWord(text);
 }
 
 feature_map sumMaps(vector<feature_map> maps){
@@ -92,8 +94,8 @@ feature_map tokenize(string content, int& numWords){
     for(int i = 0; i < content.length(); i++){
         if(content[i] == ' ' || content[i] == '\n' || content[i] == '-'){ 
             numWords++;
-            string currentWord = getCleanedWord(content.substr(lastIndex+1, i - lastIndex));
-            cleanWord(currentWord);   
+            string currentWord = FastDelta::getCleanedWord(content.substr(lastIndex+1, i - lastIndex));
+            FastDelta::cleanWord(currentWord);   
             wordFreqs[currentWord]++;
             lastIndex = i;
         }
@@ -144,7 +146,7 @@ void autoInsertFeature(feature_vec& features, feature targetFeature){
 
     for(int i = 0; i < features.size(); i++){
         if(targetFeature.second > features[i].second){
-            insertFeature(features, targetFeature, i);
+            FastDelta::insertFeature(features, targetFeature, i);
             return;
         }
     }

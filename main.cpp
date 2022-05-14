@@ -6,6 +6,7 @@
 #include "Corpus.h"
 
 using namespace std;
+using namespace FastDelta;
 
 int main(){
     Corpus dataset("/home/henry/Desktop/GitRepos/CStylo/Dataset", 50);
