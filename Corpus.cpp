@@ -144,7 +144,9 @@ vector<double> Corpus::getZScores(string authorName){
     return zScores;
 }
 
-vector<pair<string, double>> Corpus::rankBySimilarity(string authorName){
+vector<pair<string, double>> Corpus::rankBySimilarity(string authorName){ 
+    /*This function should rate all texts in the Corpus, except one, by their similarity to the text
+    refrenced by the name passed to the method */
     vector<double> unknownZScores = this->getZScores(authorName);
     vector<pair<string, double>> rankings;
 

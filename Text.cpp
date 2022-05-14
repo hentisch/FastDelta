@@ -29,6 +29,7 @@ void Text::trimFeatures(unordered_set<string> topFeatures){
 }
 
 double Text::getFrequency(string feature){
+    /*A getter method for the frequency of a word*/
     if(wordFrequencies.find(feature) == wordFrequencies.end()){
         return 0;
     }
