@@ -1,5 +1,5 @@
 # FastDelta
-The 'FastDelta' C++ library is, as the name may apply, built to allow for the quick use of Delta methods of authorship attributation. Certain well established libraries, such as [Stylo](https://github.com/computationalstylistics/stylo), are likely to be more accurate for research and smaller tasks of identification. However, this library is much, much faster than Stylo on account of being written in C++. As such, this library allows for the use of these methods on a larger scale than was feasable before.
+The 'FastDelta' C++ library is, as the name may apply, built to allow for the quick use of Delta methods of authorship attributation, specifically the cosine delta measure. Certain well established libraries, such as [Stylo](https://github.com/computationalstylistics/stylo), are likely to be more accurate for research and smaller tasks of identification. However, this library is much, much faster than Stylo on account of being written in C++. As such, this library allows for the use of these methods on a larger scale than was feasable before.
 
 ## Installation
 To install 'FastDelta':
